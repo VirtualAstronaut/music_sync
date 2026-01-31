@@ -1,0 +1,36 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "yt_sync",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "yt_sync (Chrome)",
+            "request": "launch",
+            "type": "dart",
+            "args": [
+                "-d",
+                "chrome",
+                "--web-browser-flag",
+                "--disable-web-security"
+            ]
+        },
+        {
+            "name": "yt_sync (macOS)",
+            "request": "launch",
+            "type": "dart",
+            "args": [
+                "-d",
+                "macos"
+            ]
+        },
+        {
+            "name": "yt_sync (Release)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}
