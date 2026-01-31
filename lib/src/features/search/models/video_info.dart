@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:youtube_explode_dart/youtube_explode_dart.dart' as yt_exp;
 
 part 'video_info.freezed.dart';
 
@@ -13,6 +14,26 @@ abstract class VideoInfo with _$VideoInfo {
     required String audioUrl,
     required String videoId,
   }) = _VideoInfo;
+
+  factory VideoInfo.fromYoutube(yt_exp.Video video) {
+    String formatDuration(Duration? d) {
+      if (d == null) return 'Unknown';
+      final h = d.inHours;
+      final m = d.inMinutes.remainder(60).toString().padLeft(2, '0');
+      final s = d.inSeconds.remainder(60).toString().padLeft(2, '0');
+      return h > 0 ? '$h:$m:$s' : '$m:$s';
+    }
+
+    return VideoInfo(
+      title: video.title,
+      author: video.author,
+      duration: formatDuration(video.duration),
+      url: video.url,
+      thumbnail: video.thumbnails.highResUrl,
+      audioUrl: '', // To be filled by local API later
+      videoId: video.id.value,
+    );
+  }
 
   factory VideoInfo.fromJson(Map<String, dynamic> json) {
     // Extract audio URL from requested_formats

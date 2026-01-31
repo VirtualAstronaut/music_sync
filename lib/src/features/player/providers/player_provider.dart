@@ -1,6 +1,7 @@
 import 'package:just_audio/just_audio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:yt_sync/src/features/search/models/video_info.dart';
+import 'package:yt_sync/src/features/search/providers/video_search_provider.dart';
 
 part 'player_provider.g.dart';
 
@@ -16,10 +17,17 @@ class PlayerState extends _$PlayerState {
   @override
   VideoInfo? build() => null;
 
-  void play(VideoInfo video) {
-    state = video;
+  Future<void> play(VideoInfo video) async {
+    VideoInfo fullVideo = video;
+
+    // If audioUrl is missing (e.g. from a search list), fetch it from backend
+    if (fullVideo.audioUrl.isEmpty) {
+      fullVideo = await ref.read(fetchVideoDetailsProvider(video.videoId).future);
+    }
+
+    state = fullVideo;
     final player = ref.read(audioPlayerProvider);
-    player.setUrl(video.audioUrl);
+    await player.setUrl(fullVideo.audioUrl);
     player.play();
   }
 

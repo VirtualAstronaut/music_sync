@@ -13,8 +13,8 @@ class SearchLoading extends SearchState {
 }
 
 class SearchSuccess extends SearchState {
-  const SearchSuccess(this.video);
-  final VideoInfo video;
+  const SearchSuccess(this.videos);
+  final List<VideoInfo> videos;
 }
 
 sealed class SearchFailureState extends SearchState {
