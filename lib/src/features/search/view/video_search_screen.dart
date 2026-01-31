@@ -1,3 +1,5 @@
+import 'dart:developer' as dev;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yt_sync/src/features/player/providers/player_provider.dart';
@@ -127,8 +129,12 @@ class _VideoListTile extends ConsumerWidget {
       child: InkWell(
         onTap: () async {
           // Play automatically fetches missing details via backend API
+          dev.log(
+            "Playing ${video.title} with id ${video.videoId}",
+            name: 'VideoListTile',
+          );
           ref.read(playerStateProvider.notifier).play(video);
-          PlayerRoute().go(context);
+          PlayerRoute().push(context);
         },
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
